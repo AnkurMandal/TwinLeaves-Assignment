@@ -23,14 +23,4 @@ public class ProductController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
-    @PutMapping("issueBatch")
-    public ResponseEntity<String> issueBatch(@RequestParam("batchId") Integer batchId, @RequestParam("productId") Integer productId){
-        try{
-            String result = productService.issueProduct(batchId, productId);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 }

@@ -1,6 +1,8 @@
 package com.example.TwinLeaves_Assignment.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -17,14 +19,18 @@ public class Gtin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
+
     String gtin;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "gtin", cascade = CascadeType.ALL)
-    private List<Batch> batchList = new ArrayList<>();
+     List<Batch> batchList = new ArrayList<>();
 
-    @JsonIgnore
+
     @OneToOne
-    @JoinColumn
-    private Product product;
+    @JoinColumn(name = "product_id")
+    @JsonBackReference
+    Product product;
 
 }

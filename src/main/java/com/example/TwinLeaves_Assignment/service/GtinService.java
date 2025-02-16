@@ -19,32 +19,25 @@ public class GtinService {
     @Autowired
     private ProductRepository productRepository;
 
-    public String issueProduct(Integer id, Integer productId) throws Exception{
-        Optional<Gtin> optionalGtinModel = gtinRepository.findById(id);
+    public String addGtin(Gtin gtin,Integer productId) throws Exception{
+        if(gtin.getId() != null){
+            throw new Exception("Gtin already exists.");
+        }
         Optional<Product> optionalProduct = productRepository.findById(productId);
 
-        if(optionalGtinModel.isEmpty()){
-            throw new Exception("gtin_id is invalid!");
-        }
         if(optionalProduct.isEmpty()){
             throw new Exception("productId is invalid!");
         }
-
-        Gtin gtin = optionalGtinModel.get();
         Product product = optionalProduct.get();
 
         product.setGtin(gtin);
+
         gtin.setProduct(product);
 
         productRepository.save(product);
-        return "Product successfully issued to Gtin.";
-    }
 
-    public String addGtin(Gtin gtinModel) throws Exception{
-        if(gtinModel.getId() != null){
-            throw new Exception("Gtin already exists.");
-        }
-        gtinRepository.save(gtinModel);
+//        gtinRepository.save(gtin);
+
         return "Gtin has been successfully save into Database.";
     }
 

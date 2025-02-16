@@ -6,6 +6,7 @@ import com.example.TwinLeaves_Assignment.model.Gtin;
 import com.example.TwinLeaves_Assignment.model.Product;
 import com.example.TwinLeaves_Assignment.repository.BatchRepository;
 import com.example.TwinLeaves_Assignment.repository.GtinRepository;
+import com.example.TwinLeaves_Assignment.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,28 @@ public class BatchService {
     @Autowired
     private GtinRepository gtinRepository;
 
-    public String addBatch(Batch batch) throws Exception{
+
+
+    public String addBatch(Batch batch,Integer gtinId) throws Exception{
         if(batch.getBatchId() != null){
             throw new Exception("Batch already exists.");
         }
-        batchRepository.save(batch);
+        Optional<Gtin> optionalGtin = gtinRepository.findById(gtinId);
+
+        if(optionalGtin.isEmpty()){
+            throw new Exception("GtinId is invalid!");
+        }
+        Gtin gtin = optionalGtin.get();
+
+        gtin.getBatchList().add(batch);
+
+
+        batch.setGtin(gtin);
+
+
+
+        gtinRepository.save(gtin);
+//        batchRepository.save(batch);
         return "Batch has been successfully save into Database.";
     }
 
@@ -42,26 +60,6 @@ public class BatchService {
         return productList;
     }
 
-    public String issueProduct(Integer id, Integer batchId) throws Exception{
-        Optional<Gtin> optionalGtinModel = gtinRepository.findById(id);
-        Optional<Batch> optionalBatch = batchRepository.findById(batchId);
-
-        if(optionalGtinModel.isEmpty()){
-            throw new Exception("gtin_id is invalid!");
-        }
-        if(optionalBatch.isEmpty()){
-            throw new Exception("batchId is invalid!");
-        }
-
-        Gtin gtin = optionalGtinModel.get();
-        Batch batch = optionalBatch.get();
-
-        batch.setGtin(gtin);
-        gtin.getBatchList().add(batch);
-
-        gtinRepository.save(gtin);
-        return "batch successfully issued to Gtin.";
-    }
 
     public Batch inwardedOn() throws Exception{
         List<Batch> batches = batchRepository.findBatchesWithNegativeOrZeroQuantityOrderByInwardedOn();

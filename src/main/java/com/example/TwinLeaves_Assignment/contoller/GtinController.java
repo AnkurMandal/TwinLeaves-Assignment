@@ -21,19 +21,9 @@ public class GtinController {
     private GtinService gtinService;
 
     @PostMapping("/addGtin")
-    public ResponseEntity<String> addGtin(@RequestBody Gtin gtin){
+    public ResponseEntity<String> addGtin(@RequestBody Gtin gtin, @RequestParam("product-id") Integer productId){
         try{
-            String result = gtinService.addGtin(gtin);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping("/issueProduct")
-    public ResponseEntity<String> issueProduct(@RequestParam("id") Integer id , @RequestParam("productId") Integer productId){
-        try{
-            String result = gtinService.issueProduct(id, productId);
+            String result = gtinService.addGtin(gtin,productId);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

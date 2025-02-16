@@ -17,9 +17,9 @@ public class BatchController {
     private BatchService batchService;
 
     @PostMapping("/addBatch")
-    public ResponseEntity<String> addBatch(@RequestBody Batch batch){
+    public ResponseEntity<String> addBatch(@RequestBody Batch batch,@RequestParam("gtin-id") Integer gtinId){
         try{
-            String result = batchService.addBatch(batch);
+            String result = batchService.addBatch(batch,gtinId);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -36,15 +36,6 @@ public class BatchController {
         }
     }
 
-    @PutMapping("/issueBatchToGtin")
-    public ResponseEntity<String> issueBatchToGtin(@RequestParam("id") Integer id, @RequestParam("batchId") Integer batchId){
-        try{
-            String result = batchService.issueProduct(id, batchId);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @GetMapping("inwardedOn")
     public ResponseEntity<Batch> inwardedOn(){
