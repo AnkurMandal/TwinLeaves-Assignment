@@ -26,7 +26,7 @@ public class BatchController {
         }
     }
 
-    @GetMapping("/allProductsWithBatch")
+    @GetMapping("/all-Products-With-Batch")
     public ResponseEntity<List<Product>> allProductsWithBatch(@RequestParam("batchId") Integer batchId){
         try{
             List<Product> result = batchService.allProductsWithBatch(batchId);
@@ -47,7 +47,7 @@ public class BatchController {
         }
     }
 
-    @GetMapping("allBatch")
+    @GetMapping("get-all-Batch")
     public ResponseEntity<List<Batch>> allBatch(){
         try{
             List<Batch> result = batchService.allBatch();

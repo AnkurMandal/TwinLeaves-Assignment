@@ -30,7 +30,7 @@ public class GtinController {
         }
     }
 
-    @GetMapping("/getGtin")
+    @GetMapping("/get-All-Gtin")
     public ResponseEntity<List<Gtin>> getGtin(){
         try{
             List<Gtin> result = gtinService.getGtin();
@@ -40,7 +40,7 @@ public class GtinController {
         }
     }
 
-    @GetMapping("/positiveAvailableQuantity")
+    @GetMapping("/positive-Available-Quantity")
     public ResponseEntity<List<Gtin>> positiveAvailableQuantity(){
         try{
             List<Gtin> result = gtinService.positiveAvailableQuantity();

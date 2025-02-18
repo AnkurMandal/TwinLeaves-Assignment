@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface GtinRepository extends JpaRepository<Gtin, Integer> {
-    @Query(value = "select distinct g.id, g.gtin, g.product_id from gtin_model g inner join batch b on b.gtin_model_id = g.id where b.available_quantity > 0", nativeQuery = true)
+    @Query(value = "select distinct g.id, g.gtin, g.product_id from gtin g inner join batch b on b.gtin_id = g.id where b.available_quantity > 0", nativeQuery = true)
     List<Gtin> findGtinWithPositiveAvailableQuantity();
 }
