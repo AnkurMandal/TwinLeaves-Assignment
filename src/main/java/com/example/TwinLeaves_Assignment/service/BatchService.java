@@ -47,18 +47,6 @@ public class BatchService {
         return "Batch has been successfully save into Database.";
     }
 
-    public List<Product> allProductsWithBatch(Integer batchId) throws Exception{
-        Optional<Batch> optionalBatch = batchRepository.findById(batchId);
-
-        if(optionalBatch.isEmpty()){
-            throw new Exception("BatchId is invalid!");
-        }
-
-        Batch batch = optionalBatch.get();
-        List<Product> productList = batch.getProductList();
-
-        return productList;
-    }
 
 
     public Batch inwardedOn() throws Exception{

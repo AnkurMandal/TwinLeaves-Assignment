@@ -26,15 +26,7 @@ public class BatchController {
         }
     }
 
-    @GetMapping("/all-Products-With-Batch")
-    public ResponseEntity<List<Product>> allProductsWithBatch(@RequestParam("batchId") Integer batchId){
-        try{
-            List<Product> result = batchService.allProductsWithBatch(batchId);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
+
 
 
     @GetMapping("inwardedOn")
